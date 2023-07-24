@@ -28,6 +28,20 @@ See https://github.com/kpfleming/jinjanator/blob/main/.github/CONTRIBUTING.md#ch
 
 <!-- towncrier release notes start -->
 
+## [23.2.0](https://github.com/kpfleming/jinjanator/tree/23.2.0) - 2023-07-24
+
+### Backwards-incompatible Changes
+
+- Increased minimum Python version to 3.9 to ensure Ansible compatibility.
+  [#1](https://github.com/kpfleming/jinjanator-plugin-ansible/issues/1)
+
+
+### Additions
+
+- Add remaining filters and tests from the base Ansible collection.
+  [#1](https://github.com/kpfleming/jinjanator-plugin-ansible/issues/1)
+
+
 ## [23.1.0](https://github.com/kpfleming/jinjanator/tree/23.1.0) - 2023-07-24
 
 Initial release!
