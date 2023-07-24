@@ -13,7 +13,7 @@ license = { text="Apache-2.0" }
 authors = [
   { name="Kevin P. Fleming", email="jinjanator@kevin.km6g.us" },
 ]
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Environment :: Console",
@@ -22,7 +22,6 @@ classifiers = [
   "Natural Language :: English",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
@@ -118,7 +117,6 @@ dependencies = [
 
 [[tool.hatch.envs.ci.matrix]]
 python = [
-"3.8",
 "3.9",
 "3.10",
 "3.11",
@@ -181,7 +179,7 @@ line-length = 90
 [tool.ruff]
 src = ["src", "tests"]
 format = "grouped"
-target-version = "py38"
+target-version = "py39"
 select = ["ALL"]
 
 ignore = [
@@ -219,7 +217,7 @@ addopts = [
 ]
 
 [tool.mypy]
-python_version = 3.8
+python_version = 3.9
 namespace_packages = true
 explicit_package_bases = true
 check_untyped_defs = true
