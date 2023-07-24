@@ -1,0 +1,277 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = [
+  "hatch-fancy-pypi-readme",
+  "hatch-vcs",
+  "hatchling",
+]
+
+[project]
+name = "jinjanator-plugin-ansible"
+description = "Plugin which provides Ansible filters and tests to the Jinjanator tool"
+license = { text="Apache-2.0" }
+authors = [
+  { name="Kevin P. Fleming", email="jinjanator@kevin.km6g.us" },
+]
+requires-python = ">=3.8"
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: System Administrators",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Typing :: Typed",
+]
+dynamic = [
+  "readme",
+  "version",
+]
+dependencies = [
+  "ansible-core",
+  "jinjanator-plugins==23.1.*",
+]
+[project.urls]
+"Bug Tracker" = "https://github.com/kpfleming/jinjanator-plugin-ansible/issues"
+"Homepage" = "https://github.com/kpfleming/jinjanator-plugin-ansible"
+[project.entry-points.jinjanator]
+ansible = "jinjanator_plugin_ansible.plugin"
+
+[tool.hatch.envs.changelog]
+skip-install = true
+dependencies = [
+  "towncrier",
+]
+
+[tool.hatch.envs.changelog.scripts]
+draft = [
+  "towncrier build --version main --draft",
+]
+release = [
+  "towncrier build --yes --version {args}",
+]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build]
+exclude = [
+  "*~",
+  ".github",
+]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "src",
+    "tests",
+    "*.md",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = [
+    "src/jinjanator_plugin_ansible",
+]
+
+[tool.hatch.envs.default]
+python = "3.11"
+
+[tool.hatch.envs.lint]
+dependencies = [
+    "attrs", # needed for type-checking tests
+    "black",
+    "jinjanator", # needed for type-checking tests
+    "ruff",
+    "mypy",
+    "pytest", # needed for type-checking tests
+]
+
+[tool.hatch.envs.lint.scripts]
+lint = [
+     "black --preview src tests",
+     "ruff check --fix -- src tests",
+     "mypy --package jinjanator_plugin_ansible",
+     "mypy tests",
+     "shellcheck workflow-support/*.sh",
+]
+lint-action = [
+     "black --check --diff --preview src tests",
+     "ruff check --format=github -- src tests",
+     "mypy --package jinjanator_plugin_ansible",
+     "mypy tests",
+     "shellcheck workflow-support/*.sh",
+]
+
+[tool.hatch.envs.ci]
+dependencies = [
+    "attrs",
+    "coverage[toml]",
+    "jinjanator",
+    "pytest",
+    "pytest-cov",
+    "pytest-icdiff",
+]
+
+[[tool.hatch.envs.ci.matrix]]
+python = [
+"3.8",
+"3.9",
+"3.10",
+"3.11",
+"3.12",
+]
+
+[tool.hatch.envs.ci.scripts]
+ci = [
+    "rm -f .coverage",
+    # run tests
+    "pytest --verbose --cov-append  --cov-branch --cov-fail-under=100 --cov=jinjanator_plugin_ansible",
+    # produce a coverage report with 'missing' lines indicated
+    "coverage report -m",
+]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.metadata.hooks.fancy-pypi-readme]
+content-type = "text/markdown"
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+text = """
+# *jinjanator-plugin-ansible*: Makes Ansible's filters and tests available in Jinjanator
+
+"""
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+path = "README.md"
+start-after = "<!-- fancy-readme start -->"
+end-before = "<!-- fancy-readme end -->"
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+text = """
+## Release Information
+"""
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+path = "CHANGELOG.md"
+start-after = "<!-- towncrier release notes start -->"
+# pattern = "\n(###.+?\n)## "
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+text = """
+---
+[→ Full Changelog](https://github.com/kpfleming/jinjanator-plugin-ansible/blob/main/CHANGELOG.md)
+"""
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
+pattern = '\[(.+?)\]\(((?!https?://)\S+?)\)'
+replacement = '[\1](https://github.com/kpfleming/jinjanator-plugin-ansible/tree/main/\g<2>)'
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
+pattern = "#(\\d+)"
+replacement = "[#\\1](https://github.com/kpfleming/jinjanator-plugin-ansible/issues/\\1)"
+
+[tool.black]
+line-length = 90
+
+[tool.ruff]
+src = ["src", "tests"]
+format = "grouped"
+target-version = "py38"
+select = ["ALL"]
+
+ignore = [
+  "ANN",      # Mypy is better at this.
+  "C901",     # Leave complexity to me.
+  "COM",      # Leave commas to Black.
+  "D",        # We have different ideas about docstrings.
+  "E501",     # leave line-length enforcement to Black
+  "PLR0912",  # Leave complexity to me.
+  "TRY301",   # Raise in try blocks can totally make sense.
+]
+unfixable = ["F401"]
+
+[tool.ruff.per-file-ignores]
+"tests/*" = [
+  "PLC1901", # empty strings are falsey, but are less specific in tests
+  "PT005",   # we use always underscores and explicit names
+  "S101",    # assert
+  "SIM300",  # Yoda rocks in tests
+]
+
+[tool.ruff.isort]
+lines-between-types = 1
+lines-after-imports = 2
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+xfail_strict = true
+testpaths = [
+    "tests",
+]
+addopts = [
+    "-ra",
+    "--strict-markers",
+]
+
+[tool.mypy]
+python_version = 3.8
+namespace_packages = true
+explicit_package_bases = true
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+disallow_subclassing_any = true
+disallow_untyped_calls = true
+disallow_untyped_decorators = true
+disallow_untyped_defs = true
+follow_imports = "normal"
+no_implicit_optional = true
+strict_equality = true
+warn_no_return = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unused_ignores = true
+
+[tool.towncrier]
+name = "jinjanator-plugin-ansible"
+package = "jinjanator_plugin_ansible"
+directory = "changelog.d"
+filename = "CHANGELOG.md"
+start_string = "<!-- towncrier release notes start -->\n"
+template = "changelog.d/towncrier_template.md.jinja"
+title_format = ""
+issue_format = "[#{issue}](https://github.com/kpfleming/jinjanator-plugin-ansible/issues/{issue})"
+underlines = ["", "", ""]
+
+[[tool.towncrier.section]]
+path = ""
+
+[[tool.towncrier.type]]
+directory = "breaking"
+name = "Backwards-incompatible Changes"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "deprecating"
+name = "Deprecations"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "adding"
+name = "Additions"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "changing"
+name = "Changes"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "fixing"
+name = "Fixes"
+showcontent = true
