@@ -49,9 +49,11 @@ dependencies = [
 
 [tool.hatch.envs.changelog.scripts]
 draft = [
+  "rm -f changelog.d/*~",
   "towncrier build --version main --draft",
 ]
 release = [
+  "rm -f changelog.d/*~",
   "towncrier build --yes --version {args}",
 ]
 
@@ -126,10 +128,8 @@ python = [
 [tool.hatch.envs.ci.scripts]
 ci = [
     "rm -f .coverage",
-    # run tests
-    "pytest --verbose --cov-append  --cov-branch --cov-fail-under=100 --cov=jinjanator_plugin_ansible",
-    # produce a coverage report with 'missing' lines indicated
-    "coverage report -m",
+    "pytest --verbose --cov-append  --cov-branch --cov=jinjanator_plugin_ansible",
+    "coverage report --show-missing --fail-under=100",
 ]
 
 [tool.hatch.metadata]
