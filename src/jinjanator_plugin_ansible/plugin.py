@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import importlib
+
 from typing import cast
 
 import ansible.plugins.filter.core as filter_core  # type: ignore[import]
@@ -13,10 +15,17 @@ import ansible.plugins.test.uri as test_uri  # type: ignore[import]
 
 from jinjanator_plugins import (
     Filters,
+    Identity,
     Tests,
     plugin_filters_hook,
+    plugin_identity_hook,
     plugin_tests_hook,
 )
+
+
+@plugin_identity_hook
+def plugin_identities() -> Identity:
+    return f"ansible (using ansible-core {importlib.metadata.version('ansible-core')})"
 
 
 @plugin_filters_hook
