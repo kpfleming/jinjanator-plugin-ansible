@@ -83,9 +83,7 @@ python = "3.11"
 
 [tool.hatch.envs.lint]
 dependencies = [
-    "attrs", # needed for type-checking tests
     "black",
-    "jinjanator", # needed for type-checking tests
     "ruff",
     "mypy",
     "pytest", # needed for type-checking tests
@@ -111,7 +109,6 @@ lint-action = [
 dependencies = [
     "attrs",
     "coverage[toml]",
-    "jinjanator",
     "pytest",
     "pytest-cov",
     "pytest-icdiff",

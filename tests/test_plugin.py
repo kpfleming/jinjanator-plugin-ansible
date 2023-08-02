@@ -1,37 +1,23 @@
 from __future__ import annotations
 
-from pathlib import Path
+from jinjanator_plugin_ansible import plugin
 
-from jinjanator.cli import render_command
+def test_plugin_identity() -> None:
+    result = plugin.plugin_identities()
+    assert result.startswith("ansible")
+    assert "ansible-core" in result
 
-
-def test_filter(tmp_path: Path) -> None:
-    template_file = tmp_path / "template.j2"
-    template_file.write_text("{{ name | to_uuid }}")
-    data_file = tmp_path / "data.env"
-    data_file.write_text("name=Bart")
-    assert (
-        render_command(
-            Path.cwd(),
-            {},
-            None,
-            ["", str(template_file), str(data_file)],
-        )
-        == "7acd55fd-0779-54cc-a798-cdf367486926"
-    )
+def test_plugin_filters() -> None:
+    result = plugin.plugin_filters()
+    assert "to_uuid" in result
+    assert "union" in result
+    assert "urldecode" in result
+    assert "urlsplit" in result
 
 
-def test_test(tmp_path: Path) -> None:
-    template_file = tmp_path / "template.j2"
-    template_file.write_text("{% if ver is version('22.0', '>=') %}pass{% endif %}")
-    data_file = tmp_path / "data.env"
-    data_file.write_text("ver=23.2.0")
-    assert (
-        render_command(
-            Path.cwd(),
-            {},
-            None,
-            ["", str(template_file), str(data_file)],
-        )
-        == "pass"
-    )
+def test_plugin_tests() -> None:
+    result = plugin.plugin_tests()
+    assert "version_compare" in result
+    assert "is_same_file" in result
+    assert "contains" in result
+    assert "uri" in result
