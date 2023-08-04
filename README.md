@@ -51,10 +51,11 @@ global open source software community, in addition to Python
 itself. I've listed many of them below, but if I've overlooked any
 please do not be offended :-)
 
-* [Black](https://github.com/psf/black)
-* [Hatch-Fancy-PyPI-Readme](https://github.com/hynek/hatch-fancy-pypi-readme)
-* [Hatch](https://github.com/pypa/hatch)
-* [Mypy](https://github.com/python/mypy)
-* [Pytest](https://github.com/pytest-dev/pytest)
-* [Ruff](https://github.com/astral-sh/ruff)
-* [Towncrier](https://github.com/twisted/towncrier)
+* [Black](https://pypi.org/project/black)
+* [Hatch-Fancy-PyPI-Readme](https://pypi.org/project/hatch-fancy-pypi-readme)
+* [Hatch](https://pypi.org/project/hatch)
+* [Mypy](https://pypi.org/project/mypy)
+* [pyproject-fmt](https://pypi.org/project/pyproject-fmt)
+* [Pytest](https://pypi.org/project/pytest)
+* [Ruff](https://pypi.org/project/ruff)
+* [Towncrier](https://pypi.org/project/towncrier)
