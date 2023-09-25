@@ -99,7 +99,7 @@ lint = [
      "pyproject-fmt pyproject.toml",
 ]
 lint-action = [
-     "ruff check --format=github .",
+     "ruff check --output-format=github .",
      "black --check --diff --preview .",
      "mypy --package jinjanator_plugin_ansible",
      "mypy tests",
