@@ -178,7 +178,7 @@ target-version = ["py39"]
 
 [tool.ruff]
 src = ["src", "tests"]
-format = "grouped"
+output-format = "grouped"
 target-version = "py39"
 select = ["ALL"]
 

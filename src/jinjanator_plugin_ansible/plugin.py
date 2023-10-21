@@ -4,14 +4,14 @@ import importlib
 
 from typing import cast
 
-import ansible.plugins.filter.core as filter_core  # type: ignore[import]
-import ansible.plugins.filter.mathstuff as filter_mathstuff  # type: ignore[import]
-import ansible.plugins.filter.urls as filter_urls  # type: ignore[import]
-import ansible.plugins.filter.urlsplit as filter_urlsplit  # type: ignore[import]
-import ansible.plugins.test.core as test_core  # type: ignore[import]
-import ansible.plugins.test.files as test_files  # type: ignore[import]
-import ansible.plugins.test.mathstuff as test_mathstuff  # type: ignore[import]
-import ansible.plugins.test.uri as test_uri  # type: ignore[import]
+import ansible.plugins.filter.core as filter_core  # type: ignore[import-untyped]
+import ansible.plugins.filter.mathstuff as filter_mathstuff  # type: ignore[import-untyped]
+import ansible.plugins.filter.urls as filter_urls  # type: ignore[import-untyped]
+import ansible.plugins.filter.urlsplit as filter_urlsplit  # type: ignore[import-untyped]
+import ansible.plugins.test.core as test_core  # type: ignore[import-untyped]
+import ansible.plugins.test.files as test_files  # type: ignore[import-untyped]
+import ansible.plugins.test.mathstuff as test_mathstuff  # type: ignore[import-untyped]
+import ansible.plugins.test.uri as test_uri  # type: ignore[import-untyped]
 
 from jinjanator_plugins import (
     Filters,
