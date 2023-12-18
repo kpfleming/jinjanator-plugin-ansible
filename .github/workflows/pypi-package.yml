@@ -26,7 +26,7 @@ jobs:
           fetch-depth: 0
           show-progress: false
 
-      - uses: hynek/build-and-inspect-python-package@v1
+      - uses: hynek/build-and-inspect-python-package@v2
 
   release-pypi:
     name: Publish released package to PyPI
