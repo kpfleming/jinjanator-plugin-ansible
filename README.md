@@ -12,7 +12,7 @@
 
 This repo contains `jinjanator-plugin-ansible`, a plugin which
 provides access to Ansible's filters to templates rendered using the
-[Jinjanator](https://github.com/kpfleming/jinjanator) tool.
+[jinjanator](https://github.com/kpfleming/jinjanator) tool.
 
 Open Source software: [Apache License 2.0](https://spdx.org/licenses/Apache-2.0.html)
 
@@ -20,7 +20,7 @@ Open Source software: [Apache License 2.0](https://spdx.org/licenses/Apache-2.0.
 <!-- fancy-readme start -->
 
 This plugin makes all of the filters and tests from the Ansible 'core'
-collection available to templates being rendered using the Jinjanator
+collection available to templates being rendered using the jinjanator
 tool.
 
 ## Installation
@@ -38,7 +38,7 @@ itself.
 
 ## Chat
 
-If you'd like to chat with the Jinjanator community, join us on
+If you'd like to chat with the jinjanator community, join us on
 [Matrix](https://matrix.to/#/#jinjanator:km6g.us)!
 
 ## Credits
