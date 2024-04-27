@@ -28,6 +28,13 @@ See https://github.com/kpfleming/jinjanator-plugin-ansible/blob/main/.github/CON
 
 <!-- towncrier release notes start -->
 
+## [24.1.0](https://github.com/kpfleming/jinjanator-plugin-ansible/tree/24.1.0) - 2024-04-27
+
+### Changes
+
+- Upgraded to version 24.1 of jinjanator-plugins.
+  
+
 ## [23.4.0](https://github.com/kpfleming/jinjanator-plugin-ansible/tree/23.4.0) - 2023-10-07
 
 ### Additions
