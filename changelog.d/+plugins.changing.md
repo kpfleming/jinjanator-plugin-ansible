@@ -1,0 +1,1 @@
+Upgraded to version 24.1 of jinjanator-plugins.
