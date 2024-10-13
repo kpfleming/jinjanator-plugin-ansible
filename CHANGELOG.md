@@ -28,6 +28,19 @@ See https://github.com/kpfleming/jinjanator-plugin-ansible/blob/main/.github/CON
 
 <!-- towncrier release notes start -->
 
+## [24.2.0](https://github.com/kpfleming/jinjanator-plugin-ansible/tree/24.2.0) - 2024-10-13
+
+### Backwards-incompatible Changes
+
+- Upgraded to version 24.2.0 of jinjanator-plugins.
+  
+
+
+### Additions
+
+- Added support for Python 3.13.
+  
+
 ## [24.1.0](https://github.com/kpfleming/jinjanator-plugin-ansible/tree/24.1.0) - 2024-04-27
 
 ### Changes
