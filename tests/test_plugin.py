@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from jinjanator_plugin_ansible import plugin
 
 
