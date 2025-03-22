@@ -29,7 +29,7 @@ def plugin_identities() -> Identity:
 @plugin_filters_hook
 def plugin_filters() -> Filters:
     return cast(
-        Filters,
+        "Filters",
         {
             **filter_core.FilterModule().filters(),
             **filter_mathstuff.FilterModule().filters(),
@@ -42,7 +42,7 @@ def plugin_filters() -> Filters:
 @plugin_tests_hook
 def plugin_tests() -> Tests:
     return cast(
-        Tests,
+        "Tests",
         {
             **test_core.TestModule().tests(),
             **test_files.TestModule().tests(),
