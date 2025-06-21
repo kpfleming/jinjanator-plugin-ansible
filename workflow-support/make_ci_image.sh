@@ -18,9 +18,10 @@ base_image=${1}; shift
 image_name=${1}; shift
 dist_name=${1}; shift
 
+# remove these build deps once there are 'cffi' wheels for Python 3.14
+proj_build_deps=(gcc libffi-dev)
 lint_deps=(shellcheck)
 proj_deps=()
-proj_build_deps=()
 
 hatchenvs=(lint ci)
 
