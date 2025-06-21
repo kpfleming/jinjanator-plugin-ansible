@@ -79,7 +79,7 @@ packages = [
 ]
 
 [tool.hatch.envs.default]
-python = "3.12"
+python = "3.13"
 installer = "uv"
 python-sources = [
   "external",
@@ -125,6 +125,7 @@ python = [
   "3.11",
   "3.12",
   "3.13",
+  "3.14",
 ]
 
 [tool.hatch.envs.ci.scripts]
