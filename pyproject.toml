@@ -35,7 +35,7 @@ dynamic = [
 ]
 dependencies = [
   "ansible-core",
-  "jinjanator-plugins==24.2.*",
+  "jinjanator-plugins==25.1.*",
 ]
 urls."Bug Tracker" = "https://github.com/kpfleming/jinjanator-plugin-ansible/issues"
 urls."Homepage" = "https://github.com/kpfleming/jinjanator-plugin-ansible"
