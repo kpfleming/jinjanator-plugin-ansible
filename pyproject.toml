@@ -10,9 +10,6 @@ requires = [
 name = "jinjanator-plugin-ansible"
 description = "Plugin which provides Ansible filters and tests to the jinjanator tool"
 license = { text = "Apache-2.0" }
-authors = [
-  { name = "Kevin P. Fleming", email = "jinjanator@kevin.km6g.us" },
-]
 requires-python = ">=3.10"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -37,63 +34,73 @@ dependencies = [
   "ansible-core",
   "jinjanator-plugins==25.1.*",
 ]
-urls."Bug Tracker" = "https://github.com/kpfleming/jinjanator-plugin-ansible/issues"
-urls."Homepage" = "https://github.com/kpfleming/jinjanator-plugin-ansible"
-entry-points.jinjanator.ansible = "jinjanator_plugin_ansible.plugin"
+[[project.authors]]
+name = "Kevin P. Fleming"
+email = "jinjanator@kevin.km6g.us"
+[project.entry-points]
+jinjanator.ansible = "jinjanator_plugin_ansible.plugin"
+[project.urls]
+"Bug Tracker" = "https://github.com/kpfleming/jinjanator-plugin-ansible/issues"
+"Homepage" = "https://github.com/kpfleming/jinjanator-plugin-ansible"
 
-[tool.hatch.envs.changelog]
-skip-install = true
-dependencies = [
-  "towncrier",
-]
-
-[tool.hatch.envs.changelog.scripts]
-draft = [
-  "rm -f changelog.d/*~",
-  "towncrier build --version main --draft",
-]
-release = [
-  "rm -f changelog.d/*~",
-  "towncrier build --yes --version {args}",
-]
-
-[tool.hatch.version]
-source = "vcs"
-
+[tool.hatch]
 [tool.hatch.build]
 exclude = [
   "*~",
   ".github",
 ]
-
-[tool.hatch.build.targets.sdist]
-include = [
+targets.sdist.include = [
   "src",
   "tests",
   "*.md",
 ]
-
-[tool.hatch.build.targets.wheel]
-packages = [
+targets.wheel.packages = [
   "src/jinjanator_plugin_ansible",
 ]
-
-[tool.hatch.envs.default]
-python = "3.13"
-installer = "uv"
-python-sources = [
+[tool.hatch.envs]
+changelog.skip-install = true
+changelog.dependencies = [
+  "towncrier",
+]
+changelog.scripts.draft = [
+  "rm -f changelog.d/*~",
+  "towncrier build --version main --draft",
+]
+changelog.scripts.release = [
+  "rm -f changelog.d/*~",
+  "towncrier build --yes --version {args}",
+]
+ci.dependencies = [
+  "coverage[toml]",
+  "pytest",
+  "pytest-cov",
+  "pytest-icdiff",
+]
+ci.matrix = [
+  { python = [
+    "3.10",
+    "3.11",
+    "3.12",
+    "3.13",
+    "3.14",
+  ] },
+]
+ci.scripts.ci = [
+  "rm -f .coverage",
+  "pytest --verbose --cov-append  --cov-branch --cov=jinjanator_plugin_ansible",
+  "coverage report --show-missing --fail-under=100",
+]
+default.python = "3.13"
+default.installer = "uv"
+default.python-sources = [
   "external",
 ]
-
-[tool.hatch.envs.lint]
-dependencies = [
+lint.dependencies = [
   "ruff>=0.2.0",
   "mypy",
   "pyproject-fmt",
 ]
-
-[tool.hatch.envs.lint.scripts]
-lint = [
+lint.scripts.lint = [
   "ruff format",
   "ruff check --output-format=full --fix --show-fixes",
   "mypy --package jinjanator_plugin_ansible",
@@ -101,7 +108,7 @@ lint = [
   "shellcheck workflow-support/*.sh",
   "pyproject-fmt pyproject.toml",
 ]
-lint-action = [
+lint.scripts.lint-action = [
   "ruff format --check --diff",
   "ruff check --output-format=github",
   "mypy --package jinjanator_plugin_ansible",
@@ -109,58 +116,28 @@ lint-action = [
   "shellcheck workflow-support/*.sh",
   "pyproject-fmt --check pyproject.toml",
 ]
-
-[tool.hatch.envs.ci]
-dependencies = [
-  "coverage[toml]",
-  "pytest",
-  "pytest-cov",
-  "pytest-icdiff",
-]
-
-[[tool.hatch.envs.ci.matrix]]
-python = [
-  "3.10",
-  "3.11",
-  "3.12",
-  "3.13",
-  "3.14",
-]
-
-[tool.hatch.envs.ci.scripts]
-ci = [
-  "rm -f .coverage",
-  "pytest --verbose --cov-append  --cov-branch --cov=jinjanator_plugin_ansible",
-  "coverage report --show-missing --fail-under=100",
-]
-
 [tool.hatch.metadata]
 allow-direct-references = true
-
+[tool.hatch.metadata.hooks]
 [tool.hatch.metadata.hooks.fancy-pypi-readme]
 content-type = "text/markdown"
-
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
 text = """
 # *jinjanator-plugin-ansible*: Makes Ansible's filters and tests available in jinjanator
 
 """
-
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
 path = "README.md"
 start-after = "<!-- fancy-readme start -->"
 end-before = "<!-- fancy-readme end -->"
-
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
 text = """
 ## Release Information
 """
-
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
 path = "CHANGELOG.md"
 start-after = "<!-- towncrier release notes start -->"
 pattern = "\n(###.+?\n)## "
-
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
 text = """
 ---
@@ -168,24 +145,25 @@ text = """
 """
 
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
-pattern = '\[(.+?)\]\(((?!https?://)\S+?)\)'
-replacement = '[\1](https://github.com/kpfleming/jinjanator-plugin-ansible/tree/main/\g<2>)'
-
+pattern = "\\[(.+?)\\]\\(((?!https?://)\\S+?)\\)"
+replacement = "[\\1](https://github.com/kpfleming/jinjanator-plugin-ansible/tree/main/\\g<2>)"
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 pattern = "#(\\d+)"
 replacement = "[#\\1](https://github.com/kpfleming/jinjanator-plugin-ansible/issues/\\1)"
+[tool.hatch.version]
+source = "vcs"
 
 [tool.ruff]
 line-length = 100
-
 src = [
   "src",
   "tests",
 ]
-lint.select = [
+[tool.ruff.lint]
+select = [
   "ALL",
 ]
-lint.ignore = [
+ignore = [
   "ANN",     # Mypy is better at this.
   "C901",    # Leave complexity to me.
   "COM812",  # conflicts with formatter
@@ -194,21 +172,23 @@ lint.ignore = [
   "PLR0912", # Leave complexity to me.
   "TRY301",  # Raise in try blocks can totally make sense.
 ]
-lint.per-file-ignores."tests/*" = [
+per-file-ignores."tests/*" = [
   "PLC1901", # empty strings are falsey, but are less specific in tests
   "PT005",   # we use always underscores and explicit names
   "S101",    # assert
   "SIM300",  # Yoda rocks in tests
 ]
-lint.unfixable = [
+unfixable = [
   "F401",
 ]
-lint.isort.lines-after-imports = 2
-lint.isort.lines-between-types = 1
+isort.lines-after-imports = 2
+isort.lines-between-types = 1
 
 [tool.pyproject-fmt]
 max_supported_python = "3.14"
+table_format = "long"
 
+[tool.pytest]
 [tool.pytest.ini_options]
 minversion = "6.0"
 xfail_strict = true
@@ -234,34 +214,14 @@ underlines = [
   "",
   "",
 ]
-
-[[tool.towncrier.section]]
-path = ""
-
-[[tool.towncrier.type]]
-directory = "breaking"
-name = "Backwards-incompatible Changes"
-showcontent = true
-
-[[tool.towncrier.type]]
-directory = "deprecating"
-name = "Deprecations"
-showcontent = true
-
-[[tool.towncrier.type]]
-directory = "adding"
-name = "Additions"
-showcontent = true
-
-[[tool.towncrier.type]]
-directory = "changing"
-name = "Changes"
-showcontent = true
-
-[[tool.towncrier.type]]
-directory = "fixing"
-name = "Fixes"
-showcontent = true
+section = [ { path = "" } ]
+type = [
+  { directory = "breaking", name = "Backwards-incompatible Changes", showcontent = true },
+  { directory = "deprecating", name = "Deprecations", showcontent = true },
+  { directory = "adding", name = "Additions", showcontent = true },
+  { directory = "changing", name = "Changes", showcontent = true },
+  { directory = "fixing", name = "Fixes", showcontent = true },
+]
 
 [tool.mypy]
 python_version = "3.10"
