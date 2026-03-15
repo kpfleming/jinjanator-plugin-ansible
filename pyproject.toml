@@ -41,7 +41,7 @@ email = "jinjanator@kevin.km6g.us"
 jinjanator.ansible = "jinjanator_plugin_ansible.plugin"
 [project.urls]
 "Bug Tracker" = "https://github.com/kpfleming/jinjanator-plugin-ansible/issues"
-"Homepage" = "https://github.com/kpfleming/jinjanator-plugin-ansible"
+Homepage = "https://github.com/kpfleming/jinjanator-plugin-ansible"
 
 [tool.hatch]
 [tool.hatch.build]
