@@ -37,87 +37,15 @@ dependencies = [
 [[project.authors]]
 name = "Kevin P. Fleming"
 email = "jinjanator@kevin.km6g.us"
-[project.entry-points]
-jinjanator.ansible = "jinjanator_plugin_ansible.plugin"
 [project.urls]
 "Bug Tracker" = "https://github.com/kpfleming/jinjanator-plugin-ansible/issues"
 Homepage = "https://github.com/kpfleming/jinjanator-plugin-ansible"
+[project.entry-points]
+jinjanator.ansible = "jinjanator_plugin_ansible.plugin"
 
 [tool.hatch]
-[tool.hatch.build]
-exclude = [
-  "*~",
-  ".github",
-]
-targets.sdist.include = [
-  "src",
-  "tests",
-  "*.md",
-]
-targets.wheel.packages = [
-  "src/jinjanator_plugin_ansible",
-]
-[tool.hatch.envs]
-changelog.skip-install = true
-changelog.dependencies = [
-  "towncrier",
-]
-changelog.scripts.draft = [
-  "rm -f changelog.d/*~",
-  "towncrier build --version main --draft",
-]
-changelog.scripts.release = [
-  "rm -f changelog.d/*~",
-  "towncrier build --yes --version {args}",
-]
-ci.dependencies = [
-  "coverage[toml]",
-  "pytest",
-  "pytest-cov",
-  "pytest-icdiff",
-]
-ci.matrix = [
-  { python = [
-    "3.10",
-    "3.11",
-    "3.12",
-    "3.13",
-    "3.14",
-  ] },
-]
-ci.scripts.ci = [
-  "rm -f .coverage",
-  "pytest --verbose --cov-append  --cov-branch --cov=jinjanator_plugin_ansible",
-  "coverage report --show-missing --fail-under=100",
-]
-default.python = "3.13"
-default.installer = "uv"
-default.python-sources = [
-  "external",
-]
-lint.dependencies = [
-  "ruff>=0.2.0",
-  "mypy",
-  "pyproject-fmt",
-]
-lint.scripts.lint = [
-  "ruff format",
-  "ruff check --output-format=full --fix --show-fixes",
-  "mypy --package jinjanator_plugin_ansible",
-  "mypy tests",
-  "shellcheck workflow-support/*.sh",
-  "pyproject-fmt pyproject.toml",
-]
-lint.scripts.lint-action = [
-  "ruff format --check --diff",
-  "ruff check --output-format=github",
-  "mypy --package jinjanator_plugin_ansible",
-  "mypy tests",
-  "shellcheck workflow-support/*.sh",
-  "pyproject-fmt --check pyproject.toml",
-]
-[tool.hatch.metadata]
-allow-direct-references = true
+[tool.hatch.version]
+source = "vcs"
 [tool.hatch.metadata.hooks]
 [tool.hatch.metadata.hooks.fancy-pypi-readme]
 content-type = "text/markdown"
@@ -148,7 +76,6 @@ text = """
 
 [→ Full Changelog](https://github.com/kpfleming/jinjanator-plugin-ansible/blob/main/CHANGELOG.md)
 """
-
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 pattern = "\\[(.+?)\\]\\(((?!https?://)\\S+?)\\)"
 replacement = "[\\1](https://github.com/kpfleming/jinjanator-plugin-ansible/tree/main/\\g<2>)"
@@ -156,8 +83,88 @@ replacement = "[\\1](https://github.com/kpfleming/jinjanator-plugin-ansible/tree
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 pattern = "#(\\d+)"
 replacement = "[#\\1](https://github.com/kpfleming/jinjanator-plugin-ansible/issues/\\1)"
-[tool.hatch.version]
-source = "vcs"
+[tool.hatch.metadata]
+allow-direct-references = true
+[tool.hatch.build]
+exclude = [
+  "*~",
+  ".github",
+]
+targets.wheel.packages = [
+  "src/jinjanator_plugin_ansible",
+]
+targets.sdist.include = [
+  "src",
+  "tests",
+  "*.md",
+]
+[tool.hatch.envs]
+changelog.skip-install = true
+changelog.dependencies = [
+  "towncrier",
+]
+changelog.scripts.draft = [
+  "rm -f changelog.d/*~",
+  "towncrier build --version main --draft",
+]
+changelog.scripts.release = [
+  "rm -f changelog.d/*~",
+  "towncrier build --yes --version {args}",
+]
+ci.dependencies = [
+  "coverage[toml]",
+  "pytest",
+  "pytest-cov",
+  "pytest-icdiff",
+]
+ci.scripts.ci = [
+  "rm -f .coverage",
+  "pytest --verbose --cov-append  --cov-branch --cov=jinjanator_plugin_ansible",
+  "coverage report --show-missing --fail-under=100",
+]
+ci.matrix = [
+  { python = [
+    "3.10",
+    "3.11",
+    "3.12",
+    "3.13",
+    "3.14",
+  ] },
+]
+default.python = "3.13"
+default.installer = "uv"
+default.python-sources = [
+  "external",
+]
+lint.dependencies = [
+  "mypy",
+  "pyproject-fmt",
+  "ruff>=0.2.0",
+]
+lint.scripts.lint = [
+  "ruff --version",
+  "mypy --version",
+  "shellcheck --version",
+  "pyproject-fmt --version",
+  "ruff format",
+  "ruff check --output-format=full --fix --show-fixes",
+  "mypy --package jinjanator_plugin_ansible",
+  "mypy tests",
+  "shellcheck workflow-support/*.sh",
+  "pyproject-fmt pyproject.toml",
+]
+lint.scripts.lint-action = [
+  "ruff --version",
+  "mypy --version",
+  "shellcheck --version",
+  "pyproject-fmt --version",
+  "ruff format --check --diff",
+  "ruff check --output-format=github",
+  "mypy --package jinjanator_plugin_ansible",
+  "mypy tests",
+  "shellcheck workflow-support/*.sh",
+  "pyproject-fmt --check pyproject.toml",
+]
 
 [tool.ruff]
 line-length = 100
@@ -217,7 +224,6 @@ no_implicit_optional = true
 [tool.pytest]
 [tool.pytest.ini_options]
 minversion = "6.0"
-xfail_strict = true
 testpaths = [
   "tests",
 ]
@@ -225,6 +231,7 @@ addopts = [
   "-ra",
   "--strict-markers",
 ]
+xfail_strict = true
 
 [tool.towncrier]
 name = "jinjanator-plugin-ansible"
